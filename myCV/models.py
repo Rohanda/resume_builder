@@ -26,9 +26,9 @@ class Education(models.Model):
     start_Date = models.DateField(auto_now = False)
     End_Date =  models.DateField(auto_now = False)
     person = models.ForeignKey('Person',on_delete=models.CASCADE)
-    
+
     def __str__(self):
-        return self.person.first_name +' Edution'
+        return self.person.first_name +' Education'
 
     class Meta:
         verbose_name_plural = "Education"
@@ -48,16 +48,3 @@ class Skill(models.Model):
     Name =  models.CharField(max_length=30)
     Description = models.TextField(blank = True)
     person = models.ForeignKey('Person',on_delete=models.CASCADE)
-
-
-class EducationInline(admin.TabularInline):
-    model = Education
-
-class PersonAdmin(admin.ModelAdmin):
-    inlines = [
-        EducationInline,
-
-    ]
-
-
-

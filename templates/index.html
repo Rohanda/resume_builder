@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Hello this is Rohanda</title>
+  </head>
+  <body>
+    <h1>This is a template test</h1>
+
+    <table>
+      {% if Person %}
+      <th> First Name </th>
+
+        {% for item in Person %}
+      <tr>
+        <td> {{item.first_name}} + {{item.last_name}}  </td>
+      </tr>
+      {% endfor % }
+    {% endif %}
+    </table>
+
+
+    <p> No records </p>
+   </body>
+</html>

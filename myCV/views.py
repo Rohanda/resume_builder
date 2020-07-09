@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render
-from django.forms import CVform
 from django.shortcuts import render
+from django.http import HttpResponse
+from myCV.models import Person,Education,Work,Skill
 
 # # Create your views here.
 # def PersonalInfo(request):
@@ -16,3 +17,10 @@ from django.shortcuts import render
 #         # Make the form empty
 #         form = CVform()
 # return render(request, context = {'form': form})
+
+def index(request):
+    person_list =Person.objects.all()
+    print (person_list)
+    Person_info = {'Person':person_list }
+
+    return render(request,'index.html',context = Person_info)
