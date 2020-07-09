@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load static %}
+{% load staticfiles %}
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -8,19 +8,17 @@
   <body>
     <h1>This is a template test</h1>
 
+    {% if Person %}
     <table>
-      {% if Person %}
-      <th> First Name </th>
-
-        {% for item in Person %}
-      <tr>
-        <td> {{item.first_name}} + {{item.last_name}}  </td>
-      </tr>
-      {% endfor % }
-    {% endif %}
+      <tbody>
+        {% for obj in Person %}
+          <tr>
+            <td>{{ obj.first_name }}</td>
+            <td>{{ obj.last_name }}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
     </table>
-
-
-    <p> No records </p>
+    {% endif %}
    </body>
 </html>
