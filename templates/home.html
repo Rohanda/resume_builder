@@ -10,5 +10,24 @@
     <form action="/my_cv">
       <input type="submit" value="Start My CV">
     </form>
+    <table border = "3">
+      <thead>
+        <th> Name </th>
+        <th> Actions </th>
+      </thead>
+
+      {% for item in all_names %}
+          <tr>
+            <td> {{item}} </td>
+            <td>
+            <a href ="{% url 'update' item.id %}"> Update </a>
+            </td>
+            <td>
+              <a href ="{% url 'delete' item.id %}"> Delete </a>
+            </td>
+          </tr>
+
+      {% endfor %}
+    </table>
   </body>
 </html>

@@ -9,7 +9,7 @@ from django.views.generic.edit import UpdateView
 
 
 def index(request):
-    return render(request,'home.html')
+    return users(request)
 
 def new_cv(request):
     if request.method == 'POST':
@@ -45,9 +45,8 @@ def new_cv(request):
 
 def users(request):
     data = Person.objects.all()
-    print(data)
     names = {'all_names': data}
-    return render(request,'Allcvs.html',context =names )
+    return render(request,'home.html',context =names )
 
 def build_cv(request):
     formset1 = modelformset_factory(Education,exclude=('person',),extra = 2)
@@ -88,8 +87,12 @@ def build_cv(request):
         form = {'person':person,'education':education,'work':work,'skill':skill}
         return render(request,'builder.html',context =form )
 
-def person_info(request):
-    person_f = person_form()
+def person_info(request,id=-1):
+    if id != -1:
+        person_inst = Person.objects.get(pk=id)
+        person_f = person_form(instance =person_inst )
+    else:
+        person_f = person_form()
     if request.method == 'POST':
         person_f = person_form(request.POST)
         if person_f.is_valid():
@@ -99,14 +102,15 @@ def person_info(request):
     return render(request,'builder.html',context =form)
 
 def education_info(request,person_id):
-        education_f = inlineformset_factory(Person,Education,exclude=('person',))
         person_inst = Person.objects.get(pk=person_id)
+        education_f = inlineformset_factory(Person,Education,exclude=('person',))
         if request.method == 'POST':
             education_fo = education_f(request.POST,instance = person_inst)
             if education_fo.is_valid():
                 education_fo.save()
                 return redirect(work_info,id = person_id)
-        form = {'education':education_f}
+        education_fm = education_f(instance = person_inst)
+        form = {'education':education_fm}
         return render(request,'edu.html',context =form)
 
 def work_info(request,id):
@@ -117,7 +121,8 @@ def work_info(request,id):
         if work_fo.is_valid():
             work_fo.save()
             return redirect(skill_info,id = id)
-    form = {'work':work_f}
+    work_fo = work_f(instance = person_inst)
+    form = {'work':work_fo}
     return render(request,'work.html',context =form)
 
 def skill_info(request,id):
@@ -131,6 +136,10 @@ def skill_info(request,id):
     form = {'skill':skill_f}
     return render(request,'skill.html',context =form)
 
-class PersonUpate(UpdateView):
-    model = Person
-    template_name_suffix = '_update_form'
+def update_person(request,idendity):
+    return person_info(request,id = idendity)
+
+def delete_person(request,idendity):
+    person_inst = Person.objects.get(pk=idendity)
+    person_inst.delete()
+    return  index(request)
