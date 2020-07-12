@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Work form</title>
+  </head>
+  <body>
+    <h1>Welcome to CV Builder</h1>
+    <h2>Please fill in the form to build your CV</h2>
+    <form method="post">
+
+    <h3> Education </h3>
+      {{ work.as_p }}
+      {% csrf_token %}
+      <input type="submit" value="next">
+    </form>
+
+
+  </body>
+</html>

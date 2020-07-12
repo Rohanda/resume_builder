@@ -17,9 +17,11 @@ from django.conf.urls import url
 from django.contrib import admin
 from myCV import views
 from django.conf.urls import include
+from django.urls import path
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^my_cv/',include('myCV.urls')),
-    url(r'^$',views.index,name= 'index')
+    path('admin/', admin.site.urls),
+    path('my_cv/',include('myCV.urls')),
+    path('',views.index,name = 'home'),
+
 
 ]

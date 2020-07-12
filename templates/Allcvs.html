@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>All CVs</title>
+  </head>
+  <body>
+    <h2> People who filled their data </h2>
+    <table>
+      <tr>
+        <th> Name </th>
+        <th> CV </th>
+      </tr>
+
+      {% for item in all_names %}
+        <tr>
+          <td> {{item}} </td>
+          <td> {{}}
+        </tr>
+      {% endfor %}
+    </table>
+
+
+
+
+
+  </body>
+</html>
