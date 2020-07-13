@@ -12,11 +12,11 @@
     <h3>Personal Info </h3>
       {{ person.as_p }}
     <h3>Education Info </h3>
-    <table class="table table-striped m-b-none text-sm">
+    <table class="table">
              {{ education.management_form }}
              {% for form in education %}
              {{ form.id }}
-             {% if forloop.first %}
+             {% if forloop.first %} <!--if in the first loop!-->
              <thead>
                <tr>
                  {% for field in form.visible_fields %}
@@ -43,8 +43,66 @@
            </table>
 
     <h3>Work Info </h3>
+    <table class="table">
+             {{ work.management_form }}
+             {% for form in work %}
+             {{ form.id }}
+             {% if forloop.first %} <!--if in the first loop!-->
+             <thead>
+               <tr>
+                 {% for field in form.visible_fields %}
+                 <th>{{ field.label|capfirst }}</th>
+                 {% endfor %}
+               </tr>
+             </thead>
+             {% endif %}
+             <tr>
+               {% for field in form.visible_fields %}
+               <td>
+                 {# exclude the hidden fields in the form #}
+                 {% if forloop.first %}
+                 {% for hidden in form.hidden_fields %}
+                 {{ hidden }}
+                 {% endfor %}
+                 {% endif %}
+                 {{ field.errors.as_ul }}
+                 {{ field }}
+               </td>
+               {% endfor %}
+             </tr>
+             {% endfor %}
+           </table>
 
     <h3>Skill Info </h3>
+    <table class="table">
+             {{ skill.management_form }}
+             {% for form in skill %}
+             {{ form.id }}
+             {% if forloop.first %} <!--if in the first loop!-->
+             <thead>
+               <tr>
+                 {% for field in form.visible_fields %}
+                 <th>{{ field.label|capfirst }}</th>
+                 {% endfor %}
+               </tr>
+             </thead>
+             {% endif %}
+             <tr>
+               {% for field in form.visible_fields %}
+               <td>
+                 {# exclude the hidden fields in the form #}
+                 {% if forloop.first %}
+                 {% for hidden in form.hidden_fields %}
+                 {{ hidden }}
+                 {% endfor %}
+                 {% endif %}
+                 {{ field.errors.as_ul }}
+                 {{ field }}
+               </td>
+               {% endfor %}
+             </tr>
+             {% endfor %}
+           </table>
 
       {% csrf_token %}
       <input type="submit" value="Save">

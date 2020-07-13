@@ -98,7 +98,6 @@ def person_info(request):
         else:
             redirect(person_info)
 
-            #return redirect(education_info,person_id = id)
     edu = education_info(request,person_id =id)
     work = work_info(request,id = id)
     skill= skill_info(request,id = id)
@@ -113,10 +112,10 @@ def person_info(request):
     return render(request,'builder.html',context =form)
 
 def education_info(request,person_id):
-
-    #person_inst = Person.objects.get(pk=person_id)
     education_f = inlineformset_factory(Person,Education,exclude=('person',))
     education_fm = education_f()
+    print("###############")
+    print(education_fm.management_form)
     if request.method == 'POST':
         person_inst = Person.objects.get(pk=person_id)
         education_fo = education_f(request.POST,instance = person_inst)
@@ -172,12 +171,12 @@ def update_person(request,idendity):
 
 def update_edu(request,idendity):
     person_inst = Person.objects.get(pk=idendity)
-
-    education_f = education_form(person_inst)
+    education_fm = inlineformset_factory(Person,Education,exclude=('person',))
+    education_f= education_fm(instance =person_inst)
     print("&&&&&&&&&&&&&&&&&&&")
     print(person_inst)
     if request.method == 'POST':
-        education_fo = education_form(request.POST,instance= person_inst)
+        education_fo = education_fm(request.POST,instance =person_inst)
         print(person_inst)
         if education_fo.is_valid():
             education_fo.save()
@@ -186,9 +185,11 @@ def update_edu(request,idendity):
 
 def update_work(request,idendity):
     person_inst = Person.objects.get(pk=idendity)
-    work_f = work_form(person_inst)
+    work_fm = inlineformset_factory(Person,Work,exclude=('person',))
+    work_f= work_fm(instance =person_inst)
+
     if request.method == 'POST':
-        work_fo = work_form(request.POST,instance =person_inst)
+        work_fo = work_fm(request.POST,instance =person_inst)
         if work_fo.is_valid():
             work_fo.save()
         return work_fo
@@ -196,9 +197,11 @@ def update_work(request,idendity):
 
 def update_skill(request,idendity):
     person_inst = Person.objects.get(pk=idendity)
-    skill_f = skill_form(person_inst)
+    skill_fm = inlineformset_factory(Person,Skill,exclude=('person',))
+    skill_f= skill_fm(instance =person_inst)
+
     if request.method == 'POST':
-        skill_fo = skill_form(request.POST,instance =person_inst)
+        skill_fo = skill_fm(request.POST,instance =person_inst)
         if skill_fo.is_valid():
             skill_fo.save()
         return skill_fo
