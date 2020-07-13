@@ -1,33 +1,102 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title>Home</title>
+    <style>
+
+      .gg{
+
+        width: 700px;
+        border-style:solid;
+        border-width:thin;
+        border-color: #d3d3d3;
+        border-spacing: 0;
+        margin: auto;
+      }
+      .in{
+
+        width: 400px;
+        height: 100px;
+        background-color: lightblue;
+        color: black;
+        align-self: center;
+        margin: auto;
+        margin-top: 100px;
+        margin-bottom: 100px;
+        display: block;
+        border-style:ridge;
+        font-size: large;
+        font-weight: bold;
+        border-radius: 10px;
+        border: 2px ridge grey;
+        font-size: 24px;
+
+      }
+
+      th{
+
+        border-style:solid;
+        border-spacing: 0;
+        background-color: green;
+        color: white;
+        font-family: verdana;
+        height: 40px;
+        border-width:thin;
+        border-color: #d3d3d3;
+
+
+      }
+      td{
+        border-style:solid;
+        color: black;
+        border-spacing: 0;
+        font-family: verdana;
+        text-align: center;
+        height: 40px;
+        border-width:thin;
+        border-color: #d3d3d3;
+      }
+      tr:nth-child(even) {background-color: #f2f2f2;}
+      h1,h2{
+        text-align: center;
+      }
+      h2{
+          font-size: large;
+      }
+    </style>
   </head>
+
   <body>
-    <h1> Welcome to CV Builder </h1>
-    <h2> Click Start to build your CV </h2>
-    <form action="/my_cv">
-      <input type="submit" value="Start My CV">
-    </form>
-    <table border = "3">
-      <thead>
-        <th> Name </th>
-        <th> Actions </th>
-      </thead>
+<div style="background-image: url({% static 'images/indxdex.jpeg'  %});">
+    <h1 > Welcome to CV Builder </h1>
+    <h2 > Click Start to build your CV </h2>
 
-      {% for item in all_names %}
-          <tr>
-            <td> {{item}} </td>
-            <td>
-            <a href ="{% url 'update' item.id %}"> Update </a>
-            </td>
-            <td>
-              <a href ="{% url 'delete' item.id %}"> Delete </a>
-            </td>
-          </tr>
 
-      {% endfor %}
-    </table>
+  </div>
+
+  <form action="/my_cv">
+    <input class="in" type="submit" value="Start My CV">
+  </form>
+      <table class="gg">
+        <thead >
+          <th> Name </th>
+          <th colspan="2"> Actions </th>
+        </thead>
+
+        {% for item in all_names %}
+            <tr >
+              <td> {{item}} </td>
+              <td>
+              <a href ="{% url 'update' item.id %}"> Update </a>
+              </td>
+              <td>
+                <a href ="{% url 'delete' item.pk %}"> Delete </a>
+              </td>
+            </tr>
+
+        {% endfor %}
+      </table>
   </body>
 </html>
